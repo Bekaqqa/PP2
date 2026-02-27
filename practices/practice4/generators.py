@@ -1,80 +1,41 @@
 #1
-import gc
+def my_generator():
+    yield 1
+    yield 2
+    yield 3
 
-# Включаем сборку мусора
-gc.enable()
-
-# Выводим количество объектов в каждом поколении
-gen_counts = gc.get_count()
-print("Объекты в поколениях (0,1,2):", gen_counts)
+for value in my_generator():
+    print(value)
 
 #2
-import gc
+def count_up_to(n):
+    i = 1
+    while i <= n:
+        yield i
+        i += 1
 
-# Создаём несколько объектов
-a = [1, 2, 3]
-b = [4, 5, 6]
-
-print("До сборки:", gc.get_count())
-
-# Принудительно запускаем сборку поколения 0
-collected = gc.collect(0)
-print(f"Собрано объектов в поколении 0: {collected}")
-print("После сборки:", gc.get_count())
+for number in count_up_to(5):
+    print(number)
 
 #3
-import gc
+def squares(n):
+    for i in range(n):
+        yield i * i
 
-class Node:
-    def __init__(self):
-        self.ref = None
-
-# Создаём цикл
-x = Node()
-y = Node()
-x.ref = y
-y.ref = x
-
-# Удаляем ссылки
-del x
-del y
-
-# До сборки мусора
-print("До сборки:", gc.get_count())
-
-# Собираем мусор (удаляем циклические объекты)
-gc.collect()
-print("После сборки:", gc.get_count())
+for s in squares(6):
+    print(s)
 
 #4
-import gc
+def even_numbers(n):
+    for i in range(n):
+        if i % 2 == 0:
+            yield i
 
-# Создаём список объектов
-objs = [list(range(1000)) for _ in range(10)]
-
-print("До сборки:", gc.get_count())
-
-# Несколько сборок — объекты перемещаются в старшие поколения
-for i in range(3):
-    gc.collect()
-    print(f"После сборки {i+1}:", gc.get_count())
+for num in even_numbers(10):
+    print(num)
 
 #5
-import gc
-# Включаем отладку для отслеживания объектов, которые не были собраны
-gc.set_debug(gc.DEBUG_UNCOLLECTABLE)
-# Создаём объекты с циклическими ссылками
-class A:
-    def __init__(self):
-        self.ref = None
-a1 = A()
-a2 = A()
-a1.ref = a2
-a2.ref = a1
-# Удаляем ссылки
-del a1
-del a2
-# Собираем мусор
-gc.collect()
-# Проверяем наличие не собранных объектов
-print("Невозможно собрать объекты:", gc.garbage)
+numbers = (x * 2 for x in range(5))
+
+for num in numbers:
+    print(num)
