@@ -48,7 +48,7 @@ def update_contact():
     connection.commit()
     print("✅ Updated!")
 
-# 3. Show/Search contacts
+# 3. Show or search contacts
 def show_contacts():
     print("1. Show all")
     print("2. Search by name")
@@ -76,7 +76,7 @@ def show_contacts():
 
     data = cursor.fetchall()
     if not data:
-        print("⚠️ No contacts found")
+        print("No contacts found")
         return
 
     for row in data:
@@ -171,10 +171,10 @@ while True:
     elif option == "6":
         export_to_csv()
     elif option == "0":
-        print("👋 Bye!")
+        print("Bye!")
         break
     else:
-        print("❌ Invalid option")
+        print("❌Invalid option")
 
 cursor.close()
 connection.close()

@@ -1,7 +1,7 @@
 import re
 
 # Открываем файл из правильного пути
-with open("practices/practice5/raw.txt", "r") as file:
+with open("/Users/bekzatmarat/Desktop/Study/PP2/practices/practice5/raw.txt", "r") as file:
     text = file.read()
 
 # task 1 / price
